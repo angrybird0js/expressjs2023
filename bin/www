@@ -8,7 +8,10 @@ var app = require('../app');
 var debug = require('debug')('bprj-svr:server');
 var http = require('http');
 var cors = require('cors');
+var dotenv = require('dotenv');
+var mongoose = require('mongoose');
 // const PORT = 8080;
+require('../models/bookmodel')
 
 let corsOptions = {
   origin: "*",
@@ -19,7 +22,15 @@ let corsOptions = {
   credentials: true
 };
 
+dotenv.config();
 
+// 온라인DB에 연결함
+mongoose.connect(process.env.MONGO_DB_URI)
+  .then(() => {
+    console.log('connected to MongoDB');
+  }).catch(e => {
+    console.error(e);
+  })
 
 /**
  * Get port from environment and store in Express.
